@@ -84,8 +84,8 @@ def test_readme_percentages_match_the_saved_numbers():
         return f"+{round(100 * (score / frozen - 1))}%"
 
     for label, arm in (
-        ("Ours at x16", "persistent_replay_x16"),
-        ("Ours, before-plus-now", "calibration_before_now"),
+        ("Mine at x16", "persistent_replay_x16"),
+        ("Mine, before-plus-now", "calibration_before_now"),
     ):
         line = next(row for row in readme.splitlines() if row.lstrip("| *").startswith(label))
         cells = [c.strip(" *") for c in line.strip().strip("|").split("|")]
@@ -107,7 +107,7 @@ def test_readme_percentages_match_the_saved_numbers():
 
     # Stage 1's raw logs are gone, so these come from its transcribed report.
     stage1 = (RESULTS / "stage1" / "report_transcribed.txt").read_text()
-    line = next(row for row in readme.splitlines() if row.startswith("| Ours at the paper's rate"))
+    line = next(row for row in readme.splitlines() if row.startswith("| Mine at the paper's rate"))
     cells = [c.strip() for c in line.strip("| ").split("|")]
     assert cells[1:] == [
         "0.781", gain(0.781, 0.167), "0.651", gain(0.651, 0.167),

@@ -20,8 +20,8 @@ always, slower to adapt than the fastest fine-tuning.
 1. **With more updates, persistent adaptation scored above JEPA-TTT's published Two-Room results.** At
    x16, AUC was 7% higher than the paper's on grid (0.773 vs 0.725) and 5% higher on wave (0.767 vs
    0.728). Compared with its own frozen model, x16 improved best score by 381% on grid and 66% on wave,
-   against the paper's 279% and 43%. These use different checkpoints, and part of our percentage gain
-   comes from a lower frozen baseline. At the paper's own update rate, we scored below it.
+   against the paper's 279% and 43%. These use different checkpoints, and part of my percentage gain
+   comes from a lower frozen baseline. At the paper's own update rate, I scored below it.
    [See the comparison](#comparison-with-jepa-ttt).
 2. **More updates were the cheapest large gain.** Using the same data and learning rate, going from
    x4 to x16 raised AUC from 0.740 to 0.773 on grid and from 0.717 to 0.767 on wave. It also cut the
@@ -118,21 +118,21 @@ makes one update per 64 windows.
 | Method | Grid best | Gain | Grid AUC | Gain | Wave best | Gain | Wave AUC | Gain |
 |---|---|---|---|---|---|---|---|---|
 | JEPA-TTT, as published | 0.799 | +279% | 0.725 | +244% | 0.799 | +43% | 0.728 | +31% |
-| Ours at the paper's rate (`persistent_replay`) | 0.781 | +368% | 0.651 | +290% | 0.646 | +29% | 0.525 | +5% |
-| **Ours at x16** (`persistent_replay_x16`) | **0.803** | **+381%** | **0.773** | **+363%** | **0.802** | **+66%** | **0.767** | **+59%** |
-| Ours, before-plus-now (`calibration_before_now`) | 0.782 | +368% | 0.676 | +305% | 0.796 | +65% | 0.757 | +57% |
+| Mine at the paper's rate (`persistent_replay`) | 0.781 | +368% | 0.651 | +290% | 0.646 | +29% | 0.525 | +5% |
+| **Mine at x16** (`persistent_replay_x16`) | **0.803** | **+381%** | **0.773** | **+363%** | **0.802** | **+66%** | **0.767** | **+59%** |
+| Mine, before-plus-now (`calibration_before_now`) | 0.782 | +368% | 0.676 | +305% | 0.796 | +65% | 0.757 | +57% |
 
-Frozen baselines are 0.211 and 0.557 in the paper, 0.167 and 0.483 in our x16 and before-plus-now run,
-and 0.167 and 0.499 in our paper-rate run.
+Frozen baselines are 0.211 and 0.557 in the paper, 0.167 and 0.483 in my x16 and before-plus-now run,
+and 0.167 and 0.499 in my paper-rate run.
 
 **How to read this:**
 
 - **Trust the absolute scores more than the percentages.** A lower frozen baseline makes the same
-  final score look like a larger gain. Our grid baseline is lower than the paper's, so its percentages
+  final score look like a larger gain. My grid baseline is lower than the paper's, so its percentages
   overstate the difference, and x16's best-score edge is only 0.004 on grid and 0.003 on wave.
 - **AUC is the clearer difference:** 7% higher on grid and 5% higher on wave at x16.
 - **This doesn't show the paper's method is worse:** it's a higher update rate, on a different
-  checkpoint and reward head. At the same update rate, we scored below the paper, especially on wave.
+  checkpoint and reward head. At the same update rate, I scored below the paper, especially on wave.
 - **Prediction error is about the same:** x16's reduction from the frozen model is 98.7% on grid and
   82.7% on wave, against the paper's 98.5% and 89.3%.
 - **The paper's headline 153% isn't comparable:** it averages eight shifts across four tasks, and this

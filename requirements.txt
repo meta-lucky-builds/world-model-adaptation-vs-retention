@@ -1,0 +1,13 @@
+# torch and torchvision come from the GPU machine's image; install them first if missing.
+# transformers 5 renames the ViT weights, so the published checkpoint will not load with it.
+transformers>=4.57,<5
+huggingface_hub>=0.34,<1
+stable-worldmodel @ git+https://github.com/galilai-group/stable-worldmodel.git@21446f1ede6d5284e981bd7b47f432b994e6d812
+einops>=0.8
+gymnasium>=1.0
+h5py>=3.10
+hdf5plugin>=5.0
+numpy>=1.26
+zstandard>=0.22
+pytest>=8.0
+matplotlib>=3.8  # only for scripts/make_figures.py

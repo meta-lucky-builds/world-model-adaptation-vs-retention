@@ -1,0 +1,11 @@
+shift,arm,baseline,auc_change,switch_back_10,verdict
+grid,calibration_fast,action_calibration,+0.017,0.807,fail
+grid,latent_correction,persistent_replay_x16,-0.139,0.771,fail
+grid,rollout_loss_x4,persistent_replay_x4,-0.024,0.722,fail
+grid,anchored_x4,persistent_replay_x4,-0.015,0.742,fail
+grid,calibration_before_now,action_calibration,-0.016,0.809,pass
+wave,calibration_fast,action_calibration,-0.007,0.769,fail
+wave,latent_correction,persistent_replay_x16,-0.070,0.636,fail
+wave,rollout_loss_x4,persistent_replay_x4,-0.092,0.264,fail
+wave,anchored_x4,persistent_replay_x4,-0.011,0.462,fail
+wave,calibration_before_now,action_calibration,+0.012,0.810,pass

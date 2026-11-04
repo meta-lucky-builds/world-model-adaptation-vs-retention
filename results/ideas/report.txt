@@ -1,0 +1,43 @@
+Frozen no-shift score: 0.812
+
+=== grid shift
+arm                      runs    best     auc   succ      mse    upd  ep to 0.73   back 0  back 10  back 50
+frozen                      1   0.167   0.167   0.00    1.900      0       never        -        -        -
+calibration_before_now      3   0.782   0.676   0.94    0.159   3984         190    0.809    0.809    0.812
+calibration_fast            3   0.791   0.709   0.93    0.095   4000         100    0.803    0.807    0.804
+latent_correction           3   0.747   0.634   0.80    0.444   4000         350    0.766    0.771    0.778
+rollout_loss_x4             3   0.790   0.716   0.95    0.036   1000         130    0.713    0.722    0.700
+anchored_x4                 3   0.781   0.725   0.91    0.070   1000         130    0.740    0.742    0.752
+INCOMPLETE: a frozen, baseline or calibration run is missing
+
+=== wave shift
+arm                      runs    best     auc   succ      mse    upd  ep to 0.73   back 0  back 10  back 50
+frozen                      1   0.483   0.483   0.11    1.921      0       never        -        -        -
+calibration_before_now      3   0.796   0.757   0.95    0.501   4000          70    0.807    0.810    0.812
+calibration_fast            3   0.798   0.738   0.92    0.484   4000          90    0.674    0.769    0.801
+latent_correction           3   0.756   0.697   0.77    1.407   4000         250    0.545    0.636    0.769
+rollout_loss_x4             3   0.790   0.625   0.92    0.351   1000         400    0.202    0.264    0.423
+anchored_x4                 3   0.789   0.706   0.92    0.450   1000         160    0.335    0.462    0.757
+INCOMPLETE: a frozen, baseline or calibration run is missing
+
+=== Further ideas, each judged on its own
+--- grid shift
+MISSING  calibration_fast or action_calibration
+MISSING  latent_correction or persistent_replay_x16
+MISSING  rollout_loss_x4 or persistent_replay_x4
+MISSING  anchored_x4 or persistent_replay_x4
+MISSING  calibration_before_now and action_calibration haven't both finished seeds {0, 1, 2}
+--- wave shift
+MISSING  calibration_fast or action_calibration
+MISSING  latent_correction or persistent_replay_x16
+MISSING  rollout_loss_x4 or persistent_replay_x4
+MISSING  anchored_x4 or persistent_replay_x4
+MISSING  calibration_before_now and action_calibration haven't both finished seeds {0, 1, 2}
+calibration_fast: incomplete
+latent_correction: incomplete
+rollout_loss_x4: incomplete
+anchored_x4: incomplete
+calibration_before_now: incomplete
+
+Except for before-plus-now, the 'back' columns are reported only, because after the world silently returns nearly all replay data comes from the shifted world.
+Incomplete: some runs are missing.

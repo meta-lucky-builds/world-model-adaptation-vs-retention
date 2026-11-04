@@ -1,0 +1,37 @@
+{
+  "action_stats": {
+    "mean": [
+      0.003093412611633539,
+      -0.05298233404755592
+    ],
+    "std": [
+      0.8674762845039368,
+      0.8677660226821899
+    ]
+  },
+  "render_mae": 3.902928420984608e-05,
+  "dynamics": {
+    "speed": 5.0,
+    "aligned_error": 1.0132789611816406e-06,
+    "previous_error": 8.2588896418905,
+    "next_error": 8.066365184702425
+  },
+  "alignment": {
+    "aligned_mse": 0.0636812299489975,
+    "shuffled_mse": 1.644359827041626,
+    "windows": 128
+  },
+  "reward_head": {
+    "val_mse": 1.2157189530626056e-06,
+    "best_epoch": 68,
+    "epochs_run": 83
+  },
+  "frames": 275339,
+  "episodes": 3000,
+  "score_range": [
+    0.015095892362296581,
+    0.9975522756576538
+  ],
+  "model_revision": "77adaae0bc31deab21c93740d1f8bb947cd0bdec",
+  "data_revision": "6903a2de048b13819d812da0b4dd661290bc01e4"
+}

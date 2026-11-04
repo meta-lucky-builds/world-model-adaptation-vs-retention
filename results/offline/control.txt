@@ -1,0 +1,10 @@
+[grid] no-shift 0.1016 | shifted, commanded 1.1474 | shifted, applied 0.0899 | collect 267s
+[grid] windows 1280
+[grid] updates 50: calibration (119556 params) 0.7539 | fine-tune (11740334 params) 0.6346 | 49s
+[grid] updates 150: calibration (119556 params) 0.6787 | fine-tune (11740334 params) 0.4690 | 157s
+[grid] updates 300: calibration (119556 params) 0.5644 | fine-tune (11740334 params) 0.4301 | 315s
+[wave] no-shift 0.1016 | shifted, commanded 1.1644 | shifted, applied 0.0887 | collect 388s
+[wave] windows 1280
+[wave] updates 50: calibration (119556 params) 0.5386 | fine-tune (11740334 params) 0.5727 | 87s
+[wave] updates 150: calibration (119556 params) 0.4134 | fine-tune (11740334 params) 0.4395 | 195s
+[wave] updates 300: calibration (119556 params) 0.4246 | fine-tune (11740334 params) 0.3785 | 373s

@@ -1,0 +1,40 @@
+Frozen model rollout error, on commanded actions:
+  none: 0.171
+  grid: 1.913
+  wave: 1.922
+
+=== 1. What the calibrator does to action blocks (displacement, action units)
+run              room  size of fix  fix needed  error shifted  do nothing  error old world
+grid/seed0          left         1.99        1.84           1.32        1.84             1.99
+grid/seed0         right         1.80        2.01           2.02        2.01             1.80
+grid/seed0           all         1.89        1.93           1.70        1.93             1.89
+grid/seed1          left         1.86        1.84           1.26        1.84             1.86
+grid/seed1         right         1.71        2.01           1.93        2.01             1.71
+grid/seed1           all         1.78        1.93           1.62        1.93             1.78
+grid/seed2          left         1.70        1.84           1.32        1.84             1.70
+grid/seed2         right         1.76        2.01           1.92        2.01             1.76
+grid/seed2           all         1.74        1.93           1.64        1.93             1.74
+wave/seed0          left         3.05        2.83           1.19        2.83             3.05
+wave/seed0         right         2.32        2.77           2.31        2.77             2.32
+wave/seed0           all         2.65        2.80           1.80        2.80             2.65
+wave/seed1          left         2.79        2.83           1.09        2.83             2.79
+wave/seed1         right         2.49        2.77           2.28        2.77             2.49
+wave/seed1           all         2.63        2.80           1.73        2.80             2.63
+wave/seed2          left         2.77        2.83           1.27        2.83             2.77
+wave/seed2         right         2.15        2.77           2.41        2.77             2.15
+wave/seed2           all         2.43        2.80           1.89        2.80             2.43
+
+=== 2. Rollout prediction error on the planner's own trajectories
+run                             shifted world   old world
+calibration grid/seed0                  0.097       1.859
+x16 grid/seed0                          0.018       1.675
+calibration grid/seed1                  0.104       1.874
+x16 grid/seed1                          0.010       1.647
+calibration grid/seed2                  0.093       1.839
+x16 grid/seed2                          0.021       1.672
+calibration wave/seed0                  0.599       1.858
+x16 wave/seed0                          0.331       1.581
+calibration wave/seed1                  0.579       1.881
+x16 wave/seed1                          0.376       1.556
+calibration wave/seed2                  0.544       1.844
+x16 wave/seed2                          0.279       1.577

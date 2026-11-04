@@ -1,0 +1,183 @@
+Standalone: not waiting for the earlier arms.
+Disk: 32 GiB free at /root/jepa_ttt_work
+PyTorch 2.14.0a0+4fdf77b940.nv26.08
+GPU 0: NVIDIA GeForce RTX 5090, 31 GiB, passed
+GPU 1: NVIDIA GeForce RTX 5090, 31 GiB, passed
+GPU 2: NVIDIA GeForce RTX 5090, 31 GiB, passed
+GPU 3: NVIDIA GeForce RTX 5090, 31 GiB, passed
+CPU cores usable: 92 (the host reports 192)
+Running 24 at once across 4 GPUs
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+=== 1/4 Logic tests
+.......................................................                                                                                                         [100%]
+========================================================================== warnings summary ===========================================================================
+../usr/local/lib/python3.12/dist-packages/anyio/pytest_plugin.py:14
+  /usr/local/lib/python3.12/dist-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+../usr/local/lib/python3.12/dist-packages/stable_worldmodel/envs/__init__.py:215
+  /usr/local/lib/python3.12/dist-packages/stable_worldmodel/envs/__init__.py:215: UserWarning: ale-py not found; ALE/* envs are unavailable. Install with: pip install 'stable-worldmodel[env]' or pip install ale-py.
+    from stable_worldmodel.envs import ale  # noqa: F401
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+55 passed, 2 warnings in 28.36s
+=== 2/4 Timing smoke test with the real planner settings
+start frozen__none__seed0 on GPU 0
+start frozen__grid__seed0 on GPU 1
+start frozen__wave__seed0 on GPU 2
+done frozen__none__seed0
+done frozen__wave__seed0
+done frozen__grid__seed0
+start calibration_before_now__grid__seed0 on GPU 0
+start calibration_fast__grid__seed0 on GPU 1
+start latent_correction__grid__seed0 on GPU 2
+start rollout_loss_x4__grid__seed0 on GPU 3
+start anchored_x4__grid__seed0 on GPU 0
+start calibration_before_now__wave__seed0 on GPU 1
+start calibration_fast__wave__seed0 on GPU 2
+start latent_correction__wave__seed0 on GPU 3
+start rollout_loss_x4__wave__seed0 on GPU 0
+start anchored_x4__wave__seed0 on GPU 1
+done rollout_loss_x4__grid__seed0
+done latent_correction__wave__seed0
+done latent_correction__grid__seed0
+done calibration_fast__wave__seed0
+done rollout_loss_x4__wave__seed0
+done anchored_x4__wave__seed0
+done anchored_x4__grid__seed0
+done calibration_before_now__grid__seed0
+done calibration_before_now__wave__seed0
+done calibration_fast__grid__seed0
+all runs finished
+GPU 0: peak memory 10592 of 32607 MiB, mean use 90%
+GPU 1: peak memory 10416 of 32607 MiB, mean use 95%
+GPU 2: peak memory 6805 of 32607 MiB, mean use 66%
+GPU 3: peak memory 6985 of 32607 MiB, mean use 55%
+anchored_x4__grid__seed0: 340 s
+anchored_x4__wave__seed0: 336 s
+calibration_before_now__grid__seed0: 344 s
+calibration_before_now__wave__seed0: 348 s
+calibration_fast__grid__seed0: 351 s
+calibration_fast__wave__seed0: 240 s
+frozen__grid__seed0: 36 s
+frozen__none__seed0: 20 s
+frozen__wave__seed0: 35 s
+latent_correction__grid__seed0: 234 s
+latent_correction__wave__seed0: 230 s
+rollout_loss_x4__grid__seed0: 228 s
+rollout_loss_x4__wave__seed0: 335 s
+=== 3/4 The five ideas, with the same settings as run_calibration.sh
+skip frozen__none__seed0: already finished
+skip frozen__wave__seed0: already finished
+skip frozen__grid__seed0: already finished
+frozen no-shift score: 0.812
+frozen grid score: 0.167
+frozen wave score: 0.483
+start calibration_before_now__grid__seed0 on GPU 0
+start calibration_before_now__grid__seed1 on GPU 1
+start calibration_before_now__grid__seed2 on GPU 2
+start calibration_fast__grid__seed1 on GPU 0
+start calibration_fast__grid__seed0 on GPU 3
+start calibration_fast__grid__seed2 on GPU 1
+start latent_correction__grid__seed0 on GPU 2
+start latent_correction__grid__seed1 on GPU 3
+start rollout_loss_x4__grid__seed0 on GPU 1
+start latent_correction__grid__seed2 on GPU 0
+start rollout_loss_x4__grid__seed1 on GPU 2
+start rollout_loss_x4__grid__seed2 on GPU 3
+start anchored_x4__grid__seed0 on GPU 0
+start anchored_x4__grid__seed1 on GPU 1
+start anchored_x4__grid__seed2 on GPU 2
+start calibration_before_now__wave__seed0 on GPU 3
+start calibration_before_now__wave__seed1 on GPU 0
+start calibration_before_now__wave__seed2 on GPU 1
+start calibration_fast__wave__seed0 on GPU 2
+start calibration_fast__wave__seed1 on GPU 3
+start calibration_fast__wave__seed2 on GPU 0
+start latent_correction__wave__seed0 on GPU 1
+start latent_correction__wave__seed2 on GPU 3
+start latent_correction__wave__seed1 on GPU 2
+done anchored_x4__grid__seed0
+start rollout_loss_x4__wave__seed0 on GPU 0
+done anchored_x4__grid__seed1
+start rollout_loss_x4__wave__seed1 on GPU 1
+done rollout_loss_x4__grid__seed2
+start rollout_loss_x4__wave__seed2 on GPU 3
+done anchored_x4__grid__seed2
+start anchored_x4__wave__seed0 on GPU 2
+done rollout_loss_x4__grid__seed0
+start anchored_x4__wave__seed1 on GPU 1
+done latent_correction__grid__seed2
+start anchored_x4__wave__seed2 on GPU 0
+done rollout_loss_x4__grid__seed1
+done calibration_before_now__wave__seed1
+done latent_correction__wave__seed0
+done calibration_before_now__wave__seed0
+done latent_correction__grid__seed1
+done calibration_fast__wave__seed2
+done latent_correction__grid__seed0
+done calibration_before_now__wave__seed2
+done latent_correction__wave__seed2
+done calibration_before_now__grid__seed2
+done calibration_fast__grid__seed1
+done calibration_fast__grid__seed2
+done latent_correction__wave__seed1
+done calibration_fast__wave__seed1
+done calibration_fast__wave__seed0
+done calibration_before_now__grid__seed0
+done calibration_fast__grid__seed0
+done calibration_before_now__grid__seed1
+done anchored_x4__wave__seed0
+done rollout_loss_x4__wave__seed2
+done rollout_loss_x4__wave__seed0
+done anchored_x4__wave__seed2
+done anchored_x4__wave__seed1
+done rollout_loss_x4__wave__seed1
+all runs finished
+=== 4/4 Results, compared with the saved earlier arms
+Frozen no-shift score: 0.812
+
+=== grid shift
+arm                      runs    best     auc   succ      mse    upd  ep to 0.73   back 0  back 10  back 50
+frozen                      1   0.167   0.167   0.00    1.900      0       never        -        -        -
+calibration_before_now      3   0.782   0.676   0.94    0.159   3984         190    0.809    0.809    0.812
+calibration_fast            3   0.791   0.709   0.93    0.095   4000         100    0.803    0.807    0.804
+latent_correction           3   0.747   0.634   0.80    0.444   4000         350    0.766    0.771    0.778
+rollout_loss_x4             3   0.790   0.716   0.95    0.036   1000         130    0.713    0.722    0.700
+anchored_x4                 3   0.781   0.725   0.91    0.070   1000         130    0.740    0.742    0.752
+INCOMPLETE: a frozen, baseline or calibration run is missing
+
+=== wave shift
+arm                      runs    best     auc   succ      mse    upd  ep to 0.73   back 0  back 10  back 50
+frozen                      1   0.483   0.483   0.11    1.921      0       never        -        -        -
+calibration_before_now      3   0.796   0.757   0.95    0.501   4000          70    0.807    0.810    0.812
+calibration_fast            3   0.798   0.738   0.92    0.484   4000          90    0.674    0.769    0.801
+latent_correction           3   0.756   0.697   0.77    1.407   4000         250    0.545    0.636    0.769
+rollout_loss_x4             3   0.790   0.625   0.92    0.351   1000         400    0.202    0.264    0.423
+anchored_x4                 3   0.789   0.706   0.92    0.450   1000         160    0.335    0.462    0.757
+INCOMPLETE: a frozen, baseline or calibration run is missing
+
+=== Further ideas, each judged on its own
+--- grid shift
+MISSING  calibration_fast or action_calibration
+MISSING  latent_correction or persistent_replay_x16
+MISSING  rollout_loss_x4 or persistent_replay_x4
+MISSING  anchored_x4 or persistent_replay_x4
+MISSING  calibration_before_now and action_calibration haven't both finished seeds {0, 1, 2}
+--- wave shift
+MISSING  calibration_fast or action_calibration
+MISSING  latent_correction or persistent_replay_x16
+MISSING  rollout_loss_x4 or persistent_replay_x4
+MISSING  anchored_x4 or persistent_replay_x4
+MISSING  calibration_before_now and action_calibration haven't both finished seeds {0, 1, 2}
+calibration_fast: incomplete
+latent_correction: incomplete
+rollout_loss_x4: incomplete
+anchored_x4: incomplete
+calibration_before_now: incomplete
+
+Except for before-plus-now, the 'back' columns are reported only, because after the world silently returns nearly all replay data comes from the shifted world.
+Incomplete: some runs are missing.

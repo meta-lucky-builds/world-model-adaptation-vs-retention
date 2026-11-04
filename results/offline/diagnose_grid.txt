@@ -1,0 +1,9 @@
+identity block error 0.24235579371452332
+supervised 100: block train 0.0230 test 0.0639 | rollout mse 0.5822 | 9s
+supervised 300: block train 0.0042 test 0.0222 | rollout mse 0.3453 | 20s
+supervised 1000: block train 0.0006 test 0.0121 | rollout mse 0.2794 | 48s
+supervised 2000: block train 0.0003 test 0.0102 | rollout mse 0.2442 | 74s
+supervised 4000: block train 0.0004 test 0.0099 | rollout mse 0.2381 | 133s
+self-supervised 300: one-step train 0.0767 test 0.3407 | block test 0.0720 | rollout mse 0.5644 | 95s
+self-supervised 700: one-step train 0.0635 test 0.2819 | block test 0.0571 | rollout mse 0.4744 | 228s
+self-supervised 1500: one-step train 0.0578 test 0.2628 | block test 0.0604 | rollout mse 0.4537 | 450s

@@ -17,27 +17,33 @@ always, slower to adapt than the fastest fine-tuning.
 
 ## Key findings
 
-1. **More updates were the cheapest large gain.** Using the same data and learning rate, going from
+1. **With more updates, persistent adaptation scored above JEPA-TTT's published Two-Room results.** At
+   x16, AUC was 7% higher than the paper's on grid (0.773 vs 0.725) and 5% higher on wave (0.767 vs
+   0.728). Compared with its own frozen model, x16 improved best score by 381% on grid and 66% on wave,
+   against the paper's 279% and 43%. These use different checkpoints, and part of our percentage gain
+   comes from a lower frozen baseline. At the paper's own update rate, we scored below it.
+   [See the comparison](#comparison-with-jepa-ttt).
+2. **More updates were the cheapest large gain.** Using the same data and learning rate, going from
    x4 to x16 raised AUC from 0.740 to 0.773 on grid and from 0.717 to 0.767 on wave. It also cut the
    episodes to a sustained 90% of the no-shift score from 130 and 160 to 50. Planning kept improving
    through x16, but more updates may be nearing a limit: from x8 to x16, prediction error stayed flat
    on grid and rose on wave (0.255 to 0.332).
-2. **On wave, adapting and remembering pull apart.** Right after the world silently switches back, x16
+3. **On wave, adapting and remembering pull apart.** Right after the world silently switches back, x16
    scores 0.320 and `action_calibration` scores 0.753, against 0.812 for the frozen model. On grid the
    gap is much smaller (0.764 vs 0.802).
-3. **`calibration_before_now` was the closest to both on wave.** It keeps the frozen model and a
+4. **`calibration_before_now` was the closest to both on wave.** It keeps the frozen model and a
    calibrated version, and plans with whichever predicted recent steps better. On wave, it nearly
    matches x16 on adaptation (AUC 0.757 vs 0.767) and scores 0.807 right after switching back. On grid,
    it adapts much more slowly than x16 (0.676 vs 0.773). Its pass is partly by construction, as
    [explained below](#limitations).
-4. **The paper partly reproduced.** The adaptive arms' best grid scores matched within 0.02, though
+5. **The paper partly reproduced.** The adaptive arms' best grid scores matched within 0.02, though
    `persistent_replay`'s grid AUC was lower (0.651 vs 0.725). On wave, the paper's update rate reached
    a best score of 0.646 against the paper's 0.799, failing a check I set in advance. x4 reached 0.799.
    Update rate isn't the whole story: `persistent_local` makes more updates, yet reached only 0.608.
-5. **In this comparison, prediction error didn't track planning.** In the old world, the calibrator's
+6. **In this comparison, prediction error didn't track planning.** In the old world, the calibrator's
    rollout error (1.84–1.88) is worse than x16's (1.56–1.68), yet it plans far better on wave right
    after the switch. I don't have a tested explanation yet.
-6. **Several ideas failed their rules.** `action_calibration` failed against x4 and x16 on both shifts.
+7. **Several ideas failed their rules.** `action_calibration` failed against x4 and x16 on both shifts.
    A V-JEPA 2.1-style rollout loss slowed wave adaptation from 160 to 400 episodes. Latent correction
    was the weakest adapter on grid, and anchoring gave no adaptation gain.
 
@@ -104,7 +110,36 @@ five ideas' verdicts are computed from report means in [`results/verdicts.csv`](
 because their per-seed logs weren't kept. That settles them, because the failures fall below the
 required mean and before-plus-now's rule uses means.
 
-### Comparison with the paper
+### Comparison with JEPA-TTT
+
+Gains are against each row's own frozen model. The paper's arm here is its published JEPA-TTT, which
+makes one update per 64 windows.
+
+| Method | Grid best | Gain | Grid AUC | Gain | Wave best | Gain | Wave AUC | Gain |
+|---|---|---|---|---|---|---|---|---|
+| JEPA-TTT, as published | 0.799 | +279% | 0.725 | +244% | 0.799 | +43% | 0.728 | +31% |
+| Ours at the paper's rate (`persistent_replay`) | 0.781 | +368% | 0.651 | +290% | 0.646 | +29% | 0.525 | +5% |
+| **Ours at x16** (`persistent_replay_x16`) | **0.803** | **+381%** | **0.773** | **+363%** | **0.802** | **+66%** | **0.767** | **+59%** |
+| Ours, before-plus-now (`calibration_before_now`) | 0.782 | +368% | 0.676 | +305% | 0.796 | +65% | 0.757 | +57% |
+
+Frozen baselines are 0.211 and 0.557 in the paper, 0.167 and 0.483 in our x16 and before-plus-now run,
+and 0.167 and 0.499 in our paper-rate run.
+
+**How to read this:**
+
+- **Trust the absolute scores more than the percentages.** A lower frozen baseline makes the same
+  final score look like a larger gain. Our grid baseline is lower than the paper's, so its percentages
+  overstate the difference, and x16's best-score edge is only 0.004 on grid and 0.003 on wave.
+- **AUC is the clearer difference:** 7% higher on grid and 5% higher on wave at x16.
+- **This doesn't show the paper's method is worse:** it's a higher update rate, on a different
+  checkpoint and reward head. At the same update rate, we scored below the paper, especially on wave.
+- **Prediction error is about the same:** x16's reduction from the frozen model is 98.7% on grid and
+  82.7% on wave, against the paper's 98.5% and 89.3%.
+- **The paper's headline 153% isn't comparable:** it averages eight shifts across four tasks, and this
+  repository only covers Two-Room.
+- **The paper doesn't report the switch-back test,** so the retention results have no paper baseline.
+
+### Comparison with the paper, arm by arm
 
 Stage 1 ran on one checkpoint with the paper's schedule. Paper values are in parentheses.
 

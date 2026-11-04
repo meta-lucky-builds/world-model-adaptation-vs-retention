@@ -9,7 +9,7 @@
 | `ideas/run.log` | That run's full terminal log | Captured from the run's output | - |
 | `offline/` | Checks of the calibrator on a small random-policy dataset, and on saved weights | Output of `scripts/offline_checks/` | - |
 | `summary.csv`, `verdicts.csv` | Tables derived from the two saved reports | `scripts/summarize_results.py` | - |
-| `per_seed.csv` | AUC, switch-back and starting scores by seed, for the arms with logs | `scripts/summarize_results.py` | - |
+| `per_seed.csv` | AUC (also at the paper's episodes), switch-back and starting scores by seed, for the arms with logs | `scripts/summarize_results.py` | - |
 | `figures/` | README figures | `scripts/make_figures.py` | - |
 
 The `ideas` report says "incomplete" because its baselines are in the `calibration` run, on another

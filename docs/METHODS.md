@@ -94,9 +94,9 @@ predicted ones.
 - **Baseline gates:** a shift is dropped if it doesn't damage the frozen model.
 - **Shared comparison files:** the five ideas reuse the first run's reward head, baselines and test
   trajectories.
-- **Independent reviews:** separate code reviews changed the rules before results existed. For
-  example, the calibrator had to beat x16 as well as x4, because it makes as many updates. A further
-  review checked these documents against the saved evidence.
+- **AI code reviews:** separate review passes by AI agents, not outside reviewers, changed the rules
+  before results existed. For example, the calibrator had to beat x16 as well as x4, because it makes
+  as many updates. A further AI review checked these documents against the saved evidence.
 
 ## Differences from the paper
 
@@ -109,6 +109,9 @@ predicted ones.
   As in upstream's solver, each CEM iteration's first candidate is the current mean.
 - **Rotation clamp:** the base environment clamps each axis after rotation, where the paper states no
   clip for Two-Room.
+- **Evaluation schedule:** the calibration and ideas runs evaluate every 10 episodes up to 200, then
+  every 50, where the paper and stage 1 evaluate every 50. AUC comparisons with the paper use only the
+  paper's episodes where per-seed logs exist, and `results/per_seed.csv` records those values.
 - **Scope:** PPO-TTT, AdaJEPA and the sparse and dense-stream ablations aren't included, and
   `reset_local` is the paper's Appendix A6.1 control, not AdaJEPA.
 

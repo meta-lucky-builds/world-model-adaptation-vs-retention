@@ -51,6 +51,7 @@ ROW = re.compile(
     r"(?P<back_50>[\d.]+|-)$"
 )
 ROUNDING = 0.001  # means in the reports are rounded to three decimals
+PAPER_EVAL_EVERY = 50  # the paper evaluates at episodes 0, 50, ..., 500
 
 
 def parse_report(path: Path, source: str) -> tuple[float, list[dict]]:
@@ -112,6 +113,24 @@ def build_verdicts(no_shift: float, rows: list[dict]) -> list[dict]:
     return verdicts
 
 
+def read_records(arm: str, shift: str, seed: int) -> list[dict]:
+    path = RESULTS / "calibration" / "runs" / f"{arm}__{shift}__seed{seed}.jsonl"
+    return [json.loads(line) for line in path.read_text().splitlines()]
+
+
+def seed_auc_at_paper_episodes(records: list[dict]) -> float:
+    """AUC using only the paper's evaluations, at episodes 0, 50, ..., 500."""
+    evals = [r for r in records if r.get("kind") == "eval" and r["episode"] % PAPER_EVAL_EVERY == 0]
+    episodes = np.array([e["episode"] for e in evals])
+    return run_auc(episodes, np.array([e["score_final"] for e in evals]))
+
+
+def auc_at_paper_episodes(arm: str, shift: str) -> float:
+    return float(
+        np.mean([seed_auc_at_paper_episodes(read_records(arm, shift, s)) for s in range(3)])
+    )
+
+
 def build_seed_ranges() -> list[dict]:
     """Per-seed spread for the arms whose raw logs were kept."""
     arms = (
@@ -123,13 +142,13 @@ def build_seed_ranges() -> list[dict]:
     rows = []
     for shift in SHIFTS:
         for arm in arms:
-            aucs, backs, starts = [], [], []
+            aucs, paper_aucs, backs, starts = [], [], [], []
             for seed in range(3):
-                path = RESULTS / "calibration" / "runs" / f"{arm}__{shift}__seed{seed}.jsonl"
-                records = [json.loads(line) for line in path.read_text().splitlines()]
+                records = read_records(arm, shift, seed)
                 evals = [r for r in records if r.get("kind") == "eval"]
                 episodes = np.array([e["episode"] for e in evals])
                 aucs.append(run_auc(episodes, np.array([e["score_final"] for e in evals])))
+                paper_aucs.append(seed_auc_at_paper_episodes(records))
                 starts.append(evals[0]["score_final"])
                 backs.append(
                     next(
@@ -151,6 +170,9 @@ def build_seed_ranges() -> list[dict]:
                     "start_score_seed0": f"{starts[0]:.4f}",
                     "start_score_seed1": f"{starts[1]:.4f}",
                     "start_score_seed2": f"{starts[2]:.4f}",
+                    "auc_paper_episodes_seed0": f"{paper_aucs[0]:.3f}",
+                    "auc_paper_episodes_seed1": f"{paper_aucs[1]:.3f}",
+                    "auc_paper_episodes_seed2": f"{paper_aucs[2]:.3f}",
                 }
             )
     return rows

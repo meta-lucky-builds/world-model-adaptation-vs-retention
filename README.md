@@ -17,9 +17,10 @@ always, slower to adapt than the fastest fine-tuning.
 
 ## Key findings
 
-1. **With more updates, persistent adaptation scored above JEPA-TTT's published Two-Room results.** At
-   x16, AUC was 7% higher than the paper's on grid (0.773 vs 0.725) and 5% higher on wave (0.767 vs
-   0.728). Compared with its own frozen model, x16 improved best score by 381% on grid and 66% on wave,
+1. **With more updates, persistent adaptation scored above JEPA-TTT's published Two-Room results.**
+   Scored at the paper's evaluation episodes, x16's AUC was 4% higher than the paper's on grid (0.755
+   vs 0.725) and 6% higher on wave (0.773 vs 0.728). Compared with its own frozen model, x16 improved
+   best score by 381% on grid and 66% on wave,
    against the paper's 279% and 43%. These use different checkpoints, and part of my percentage gain
    comes from a lower frozen baseline. At the paper's own update rate, I scored below it.
    [See the comparison](#comparison-with-jepa-ttt).
@@ -49,7 +50,9 @@ always, slower to adapt than the fastest fine-tuning.
 
 ## Results
 
-AUC is the held-out score across the adaptation run, so higher means better and earlier. "Episodes"
+AUC is the held-out score across the adaptation run, so higher means better and earlier. This table
+evaluates every 10 episodes up to 200, then every 50, while the paper evaluates every 50, so
+[the comparison below](#comparison-with-jepa-ttt) rescores x16 to match. "Episodes"
 is when the mean score reaches and holds 90% of the no-shift score (0.73). "Back" columns are scores
 immediately after, and 50 episodes after, the world silently returns to its original dynamics. All
 values are means of 3 seeds, except the single frozen baseline.
@@ -87,8 +90,9 @@ retention advantage on wave holds on every seed.
 ![Held-out score over deployment episodes on grid and wave. x16 rises fastest on both shifts, and calibration rises more slowly on grid. On wave, every arm's mean first dips below its starting score of about 0.48 to 0.49.](results/figures/adaptation_curves.png)
 
 **Adapting can hurt at first.** On wave, the mean score of every arm in this figure drops below the
-frozen model's 0.483 at episode 10, to about 0.38–0.41, before rising. One calibration seed stays
-above it. Early updates from very little data seem to make plans worse, which a deployed system would
+frozen model's 0.483 at episode 10, to about 0.38–0.41, before rising. Some single seeds stay above
+it: 0.531 for calibration, 0.521 for x8 and 0.497 for x16. Early updates from very little data seem
+to make plans worse, which a deployed system would
 need to handle.
 
 ### Pre-set verdicts
@@ -115,11 +119,15 @@ required mean and before-plus-now's rule uses means.
 Gains are against each row's own frozen model. The paper's arm here is its published JEPA-TTT, which
 makes one update per 64 windows.
 
+x16's AUC here uses only the paper's evaluation episodes (0, 50, ..., 500), so it differs from the
+results table's 0.773 and 0.767. Before-plus-now's per-seed logs are gone, so its AUC can't be
+rescored and keeps the denser schedule, which makes that row's AUC only roughly comparable.
+
 | Method | Grid best | Gain | Grid AUC | Gain | Wave best | Gain | Wave AUC | Gain |
 |---|---|---|---|---|---|---|---|---|
 | JEPA-TTT, as published | 0.799 | +279% | 0.725 | +244% | 0.799 | +43% | 0.728 | +31% |
 | Mine at the paper's rate (`persistent_replay`) | 0.781 | +368% | 0.651 | +290% | 0.646 | +29% | 0.525 | +5% |
-| **Mine at x16** (`persistent_replay_x16`) | **0.803** | **+381%** | **0.773** | **+363%** | **0.802** | **+66%** | **0.767** | **+59%** |
+| **Mine at x16** (`persistent_replay_x16`) | **0.803** | **+381%** | **0.755** | **+352%** | **0.802** | **+66%** | **0.773** | **+60%** |
 | Mine, before-plus-now (`calibration_before_now`) | 0.782 | +368% | 0.676 | +305% | 0.796 | +65% | 0.757 | +57% |
 
 Frozen baselines are 0.211 and 0.557 in the paper, 0.167 and 0.483 in my x16 and before-plus-now run,
@@ -130,11 +138,14 @@ and 0.167 and 0.499 in my paper-rate run.
 - **Trust the absolute scores more than the percentages.** A lower frozen baseline makes the same
   final score look like a larger gain. My grid baseline is lower than the paper's, so its percentages
   overstate the difference, and x16's best-score edge is only 0.004 on grid and 0.003 on wave.
-- **AUC is the clearer difference:** 7% higher on grid and 5% higher on wave at x16.
+- **AUC is the clearer difference:** at the paper's evaluation episodes, 4% higher on grid and 6%
+  higher on wave at x16.
 - **This doesn't show the paper's method is worse:** it's a higher update rate, on a different
   checkpoint and reward head. At the same update rate, I scored below the paper, especially on wave.
-- **Prediction error is about the same:** x16's reduction from the frozen model is 98.7% on grid and
-  82.7% on wave, against the paper's 98.5% and 89.3%.
+- **Prediction error is close on grid and higher on wave:** x16's reduction from the frozen model is
+  98.7% on grid and 82.7% on wave, against the paper's 98.5% and 89.3%. Its remaining error is 0.025
+  against 0.022 on grid, and 0.332 against 0.187 on wave. The test trajectories follow the paper's
+  recipe, but aren't the same ones.
 - **The paper's headline 153% isn't comparable:** it averages eight shifts across four tasks, and this
   repository only covers Two-Room.
 - **The paper doesn't report the switch-back test,** so the retention results have no paper baseline.

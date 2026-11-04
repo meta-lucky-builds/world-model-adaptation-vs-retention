@@ -83,18 +83,27 @@ def test_readme_percentages_match_the_saved_numbers():
     def gain(score: float, frozen: float) -> str:
         return f"+{round(100 * (score / frozen - 1))}%"
 
-    for label, arm in (
-        ("Mine at x16", "persistent_replay_x16"),
-        ("Mine, before-plus-now", "calibration_before_now"),
+    from scripts.summarize_results import auc_at_paper_episodes
+
+    # x16 is rescored on the paper's episodes. Before-plus-now's logs are gone, so it can't be.
+    x16 = "persistent_replay_x16"
+    x16_auc = {shift: f"{auc_at_paper_episodes(x16, shift):.3f}" for shift in ("grid", "wave")}
+    assert x16_auc == {"grid": "0.755", "wave": "0.773"}
+    unwrapped = " ".join(readme.split())
+    assert "(0.755 vs 0.725)" in unwrapped and "(0.773 vs 0.728)" in unwrapped
+
+    for label, arm, auc_override in (
+        ("Mine at x16", x16, x16_auc),
+        ("Mine, before-plus-now", "calibration_before_now", {}),
     ):
         line = next(row for row in readme.splitlines() if row.lstrip("| *").startswith(label))
         cells = [c.strip(" *") for c in line.strip().strip("|").split("|")]
         expected = []
         for shift in ("grid", "wave"):
             frozen = float(summary[(shift, "frozen")]["auc"])
-            for column in ("best", "auc"):
-                score = summary[(shift, arm)][column]
-                expected += [score, gain(float(score), frozen)]
+            best = summary[(shift, arm)]["best"]
+            auc = auc_override.get(shift, summary[(shift, arm)]["auc"])
+            expected += [best, gain(float(best), frozen), auc, gain(float(auc), frozen)]
         assert cells[1:] == expected, label
 
     published = {"grid": (0.211, 0.799, 0.725), "wave": (0.557, 0.799, 0.728)}

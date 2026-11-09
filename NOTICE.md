@@ -32,4 +32,4 @@ The experiments use [stable-worldmodel](https://github.com/galilai-group/stable-
 `21446f1ede6d5284e981bd7b47f432b994e6d812`, and the public
 [LeWorldModel checkpoint and dataset](https://huggingface.co/collections/quentinll/lewm).
 
-The rest of this repository doesn't carry a license yet.
+The rest of this repository is released under the MIT License in [`LICENSE`](LICENSE).

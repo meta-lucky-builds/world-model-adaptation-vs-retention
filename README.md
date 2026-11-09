@@ -270,10 +270,10 @@ python scripts/summarize_results.py --check
 
 | Path | Contents |
 |---|---|
-| `jepa_ttt/` | Model loading, shifts, planner, adaptation, runner and reports |
-| `tests/` | Logic tests, plus checks that the README and results agree |
-| `results/` | Saved reports, raw logs, derived tables and figures, with [provenance](results/README.md) |
-| `scripts/` | Summaries, figures, shared run steps and offline checks |
-| `docs/METHODS.md` | Math, experiment design and differences from the paper |
+| [`jepa_ttt/`](jepa_ttt/) | Model loading, shifts, planner, adaptation, runner and reports |
+| [`tests/`](tests/) | Logic tests, plus checks that the README and results agree |
+| [`results/`](results/) | Saved reports, raw logs, derived tables and figures, with [provenance](results/README.md) |
+| [`scripts/`](scripts/) | Summaries, figures, shared run steps and offline checks |
+| [`docs/METHODS.md`](docs/METHODS.md) | Math, experiment design and differences from the paper |
 | `run_*.sh` | The three experiments |
-| `NOTICE.md` | Third-party code and sources |
+| [`NOTICE.md`](NOTICE.md) | Third-party code and sources |

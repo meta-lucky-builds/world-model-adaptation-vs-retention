@@ -234,6 +234,12 @@ designs and every difference from the paper.
 4. **Investigate the early dip and the baseline offset,** and use more seeds.
 5. **Move to Reacher,** where the paper's scores leave the most room.
 
+## Related work
+
+- JEPA-TTT's own Limitations section says its experiments "do not measure retention, forward/backward transfer, or catastrophic forgetting in continual learning settings", which is the gap the switch-back test fills.
+- [Adapt for Planning, Not just Prediction](https://arxiv.org/abs/2610.35636) (Mete et al., 26 Oct 2026) also adapts LeWorldModel at test time, on TwoRoom among others, without a retention test.
+- [One-Step Prediction Fidelity Is a Poor Proxy for Planning Performance in JEPA World Models](https://arxiv.org/abs/2610.19375) (14 Oct 2026) reports the gap between prediction error and planning that finding 6 also sees.
+
 ## Reproduce it
 
 You need Linux, a CUDA GPU, PyTorch, torchvision, git, Python 3.10.12+ or 3.11.4+, and at least 50 GB
